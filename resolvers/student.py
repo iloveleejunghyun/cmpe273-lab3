@@ -40,6 +40,8 @@ def resolve_students(_, info):
 
 @mutation.field("createStudent")
 def resolve_create_student(_, info, name):
-    user = StudentModel(name)
-    user.save_to_db()
-    return user
+    student = StudentModel.find_by_name(name)
+    if not student:
+        student = StudentModel(name)
+        student.save_to_db()
+    return student

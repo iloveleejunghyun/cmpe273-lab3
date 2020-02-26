@@ -28,3 +28,7 @@ class ClassStudentModel(db.Model):
     @classmethod
     def find_by_class_id(cls, _classId):
         return cls.query.filter_by(classId=_classId).all()
+
+    @classmethod
+    def find_by_class_id_student_id(cls, _classId, _studentId):
+        return cls.query.filter_by(classId=_classId, studentId=_studentId).first()

@@ -1,10 +1,8 @@
 # ariadne_graphql_prac  
 graphql + adridne + sqlite3 + alchemy + jwt  
 
-to be done:  
-    classStudent, classId and studentId can't be concurrently same.
-    all classes.  
-
+to be done:
+    delete student, class by id. concurrently delete map.
 
 client:  
 ---------------- student  

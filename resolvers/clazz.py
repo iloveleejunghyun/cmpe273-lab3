@@ -50,19 +50,23 @@ def resolve_classes(_, info):
 
 @mutation.field("createClass")
 def resolve_create_class(_, info, name):
-    clazz = ClassModel(name)
-    clazz.save_to_db()
+    clazz = ClassModel.find_by_name(name)
+    if not clazz:
+        clazz = ClassModel(name)
+        clazz.save_to_db()
     return clazz
 
 
 @mutation.field("addStudentToClass")
 def resolve_add_student_to_class(_, info, classId, studentId):
+
     clazz = ClassModel.find_by_id(classId)
     student = StudentModel.find_by_id(studentId)
-    if clazz:
-        if student:
+    if clazz and student:
+        classStudent = ClassStudentModel.find_by_class_id_student_id(classId, studentId)
+        if not classStudent:
             csmMap = ClassStudentModel(classId, studentId)
             csmMap.save_to_db()
-            return {"id":clazz.id, "name":clazz.name, "students" : [student]}
+        return {"id":clazz.id, "name":clazz.name, "students" : [student]}
     return {"id":classId, "name":"student or class not found", "students" : []}
     # return csmMap
